@@ -1,49 +1,41 @@
-class Question {
-  List<String>? incorrect;
-  String? text;
-  String? correct;
+class QuestionsList {
+  final List<QuestionDm> questionDm;
 
-  Question({this.incorrect, this.text, this.correct});
+  QuestionsList({required this.questionDm});
 
-  Question.fromJson(Map<String, dynamic> json) {
-    incorrect = json['incorrect'].cast<String>();
-    text = json['text'];
-    correct = json['correct'];
-  }
+  QuestionsList.fromJson(Map<String, dynamic> json)
+      : questionDm = (json['questions'] as List?)
+            ?.map((e) => e == null
+                ? <QuestionDm>[]
+                : QuestionDm.fromJson(e as Map<String, dynamic>))
+            .toList()
+            .cast<QuestionDm>() as List<QuestionDm>;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['incorrect'] = this.incorrect;
-    data['text'] = this.text;
-    data['correct'] = this.correct;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['question_dm'] = questionDm.map((v) => v.toJson()).toList();
     return data;
   }
 }
 
-class Questions {
-  final List<Question> _items = [
-    Question(
-      incorrect: [
-        "Machine learning causes global warming",
-        "Unsecure networks lead to terrorist attacks",
-        "NFTs contribute to poaching of animals"
-      ],
-      text: 'What is one potential environmental concern about Web 3.0?',
-      correct: 'Blockchains can use a lot of energy',
-    ),
-    Question(
-      incorrect: [
-        "Paying someone through PayPal",
-        "Buying something on Amazon.com",
-        "Taking a screenshot of an NFT"
-      ],
-      text:
-          'Which of the following is an example of a trustless transaction that takes place on Web 3.0?',
-      correct: 'Sending Bitcoin to someone else',
-    ),
-  ];
+class QuestionDm {
+  final List<String> incorrect;
+  final String? text;
+  final String? correct;
+  bool isAnswerCorrect = false;
 
-  List<Question> get items {
-    return [..._items];
+  QuestionDm({required this.incorrect, this.text, this.correct});
+
+  QuestionDm.fromJson(Map<String, dynamic> json)
+      : incorrect = json['incorrect'].cast<String>(),
+        text = json['text'],
+        correct = json['correct'];
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['incorrect'] = incorrect;
+    data['text'] = text;
+    data['correct'] = correct;
+    return data;
   }
 }

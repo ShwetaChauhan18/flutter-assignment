@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../flavors/flavor.dart';
 import '../flavors/flavor_config.dart';
+import '../values/app_colors.dart';
 
 /// provides extension to get a dependency from provider
 extension ContextExtension on BuildContext {
@@ -16,6 +17,18 @@ extension ContextExtension on BuildContext {
   }
 
   void pop<T>([T? result]) => Navigator.pop<T>(this, result);
+
+  void showSnackBar(String message) => ScaffoldMessenger.of(this)
+    ..removeCurrentSnackBar()
+    ..showSnackBar(
+      SnackBar(
+        backgroundColor: AppColors.colorPrimary,
+        content: Text(
+          message,
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
 }
 
 /// provides extension to get a dependency from provider

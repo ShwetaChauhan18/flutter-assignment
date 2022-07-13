@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../values/app_colors.dart';
 import '../values/app_text_style.dart';
 
-class AnswerButton extends StatelessWidget {
-  const AnswerButton({
+class AnswerWidget extends StatelessWidget {
+  const AnswerWidget({
     Key? key,
     required this.onTap,
     required this.textKey,
